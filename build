@@ -1,0 +1,21 @@
+#!/bin/sh
+# Wrapper shell script to provide an executable command for build.sh
+# This executable should be placed somewhere in PATH variable
+
+# The actual build script should be placed in the project's parent directory.
+WORKSPACE="/Users/kaleiesteves/Documents/2025/301/code/java"
+SCRIPT="$WORKSPACE/build.sh"
+
+# Check it exists in the above location
+if [ ! -f "$SCRIPT" ]; then
+	echo "Error: build.sh not found at project's parent directory."
+	exit 1
+fi
+
+# Make the script executable
+chmod +x $SCRIPT
+
+# Run the script with the arguments
+# Note: you must be in the project's parent directory to run this.
+# There is a fix for this, but I'm not bothered at the moment.
+exec "cd $WORKSPACE && $SCRIPT" "$@"
