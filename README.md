@@ -2,7 +2,9 @@
 Automated build system for compiling and running Java projects.
 This includes a minimal virtual environment with a `build` command.
 
-The main idea is that you'll be able to write and test programs while using a personal machine as if it's running Linux. It helps keeps things consistent across different platforms. This project aims to be a minimal starting point, and can be configured for more 
+The main idea is that you'll be able to write and test programs while using a personal machine as if it's running Linux. It helps keeps things consistent across different platforms. 
+
+This project aims to provide a minimal starting point that can be used as a template for a custom build system. I also have [this repo in progress](https://github.com/kaleiesteves/gradle) for a Gradle build system.
 
 ## Installation
 I suggest installing this in a sub-folder inside your user's home directory. 
