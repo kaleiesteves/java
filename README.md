@@ -114,6 +114,6 @@ If there's any issues, they're likely to be related to project structure and pat
 
 #### Important
 - Project names are case sensitive! I did this because Java's code conventions expect capitalised class names.
-- The 
+- 
 
 

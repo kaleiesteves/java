@@ -16,5 +16,15 @@ public class XSort {
     public static void main(String[] args) {
         
         System.out.println("Test for XSort...");
+
+        if (args.length <1) {
+            System.out.println("Usage: cat MobyDick.txt | java XSort 512 > Result.txt");
+            System.exit(1);
+        } else {
+            /* Take input */
+            /* Read input */
+            /* Initial sort */
+            /* Merge step */
+        }
     }
 }

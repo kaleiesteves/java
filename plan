@@ -1,0 +1,101 @@
+SUMMARY
+    There are lines of datum as input that need to be sorted as they are entered.
+
+    Similar to the Linux `sort` command, where each line is treated as a whole entry to compare *lexicographically* with the next line.
+
+    The results should be output (in batches) to temporary plain-text files which will be *merged* in future steps.
+
+    The initial runs are done in specified lengths from 64 to 1024 — using the *heap-sort algorithm* — which produce the sorted output to be merged.
+
+    The merge must be balanced and either 2-way or 4-way, with 2-way being the default.
+
+    For a balanced 2-way sort-merge:
+    `$ cat MobyDick.txt | java XSort 512 > Result.sorted`
+
+    For a balance 4-way sort-merge:
+    `$ cat MobyDick.txt | java XSort 512 4 > Result.sorted`
+
+    When merging, the [2 or 4] temporary output files contain the results, which are then sent to [2 or 4] temporary input files to be fed to the next sort-merge pass.
+
+    The final merged result is sent to stdout.
+
+PSUEDO
+    SORT
+        RUN_SORT(INPUT, SIZE)
+            WHILE data in INPUT
+                RUN = READ INPUT SIZE lines
+                ***MAX_HEAP_SORT(RUN)
+                WRITE RUN to TEMPORY_OUTPUT
+            RETURN all TEMPORY_FILES
+
+        MERGE_SORT(TEMPORARY_FILES, K)
+            WHILE length TEMPORARY_FILES > 1
+                MERGED_FILES = []
+                FOR i = 0 TO ((length TEMPORARY_FILES) - 1) STEP K
+                    IF (i + (K - 1)) < (length TEMPORARY_FILES)
+                        NEW_FILE = ***MERGE(TEMPORARY_FILES[i], ..., TEMPORARY_FILES[i + (k - 1)])
+                    ELSE
+                        NEW_FILE = TEMPORARY_FILES[i]
+                    APPEND NEW_FILE to MERGED_FILES
+                TEMPORARY_FILES = MERGED_FILES
+            RETURN final SORTED_FILE
+
+        MERGE(FILES[1], ..., FILES[K])
+            OPEN K for input FILES
+            CREATE OUTPUT_FILE
+            HEAP = ***MIN_HEAP_QUEUE()
+            FOREACH FILE in FILES
+                IF FILE has lines
+                    INSERT [FILE_FIRST_LINE, FILE_ID] in HEAP
+            WHILE HEAP is not empty
+                [LINE, FILE_ID] = ***HEAP.POP()
+                WRITE LINE to OUTPUT_FILE
+                IF FILE_ID has more lines
+                    INSERT [FILE_NEXT_LINE, FILE_ID] in HEAP
+            RETURN OUTPUT_FILE
+
+    HEAPS
+        MAX_HEAP_SORT(ARRAY)
+            N = length of ARRAY
+            FOR i = ((N / 2) - 1) DOWN to 0
+                HEAPIFY(ARRAY, N, i) to maintain maximum order
+            FOR j = (N - 1) DOWN to 1
+                SWAP ARRAY[0] and ARRAY[i]
+                HEAPIFY(ARRAY, i, 0) to maintain maximum order
+            REVERSE(ARRAY) to convert to ascending order
+
+        MIN_HEAP_QUEUE()
+            CREATE NEW_HEAP
+            FUNCTION INSERT(ELEMENT)
+                ADD ELEMENT to HEAP
+                HEAPIFY(ARRAY, NEW_HEAP_SIZE, i) to maintain minimum order
+            FUNCTION POP()
+                REMOVE then RETURN smallest ELEMENT FROM HEAP
+                HEAPIFY(ARRAY, HEAP_SIZE, i) to maintain minimum order
+            FUNCTION IS_EMPTY()
+                RETURN TRUE IF HEAP has no ELEMENTS
+
+        HEAPIFY(ARRAY, N, i)
+            TOP = i, where TOP = MIN or MAX
+            LEFT = 2i + 1
+            RIGHT = 2i + 2
+            IF LEFT < N AND ARRAY[LEFT] [> if MAX OR < if MIN] ARRAY[TOP]
+                TOP = LEFT
+            IF RIGHT < N AND ARRAY[RIGHT] [> if MAX OR < if MIN] ARRAY[TOP]
+                TOP = RIGHT
+            IF TOP != i
+                SWAP ARRAY[i] and ARRAY[TOP]
+                HEAPIFY(ARRAY, N, TOP)
+
+CONSIDER
+    LINE ENDINGS
+        Unix/Linux = \n
+        Windows = \r\n
+        macOS = \r
+        SOLUTIONS
+            dos2unix or tr -d '\r' # Linux
+            replaceAll("\\r", "") # macOS
+
+    FORMAT
+        Encoding UTF-8 vs. ASCII
+        BufferedStream to save memory
