@@ -15,6 +15,6 @@ public class XSort {
      */
     public static void main(String[] args) {
         
-        System.out.println("XSort...");
+        System.out.println("Test for XSort...");
     }
 }
