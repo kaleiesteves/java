@@ -18,7 +18,6 @@ Then while in that directory, run this line to clone the repo:
 ```
 git@github.com:kaleiesteves/java.git
 ```
-_You'll need to get me to add your **public** ssh key to the project — idk how to get around this, sorry!_
 
 
 ## Repo Tree

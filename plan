@@ -88,6 +88,13 @@ PSUEDO
                 HEAPIFY(ARRAY, N, TOP)
 
 CONSIDER
+    COMPLEXITY
+        TOTAL
+            O(n log m) + O(n log k) = O(n log n)
+        SORTING
+            O(n/m * m log m) = O(n log m)
+        MERGING
+            O(n log k)
     LINE ENDINGS
         Unix/Linux = \n
         Windows = \r\n
@@ -99,3 +106,18 @@ CONSIDER
     FORMAT
         Encoding UTF-8 vs. ASCII
         BufferedStream to save memory
+
+
+CLASSES
+    XSORT
+        + XSort(size: int, factor: int) : XSort
+        + start() : void
+    MERGE
+        + {static} mergeSortedRuns(void) : void
+        - {static} merge(files: String[], filename: String): void
+    HEAP
+        + {static} sort(array: String[]): void
+        - {static} heapify(array: String[], n: int, i: int): void
+    INPUT
+        + {static} read(input: InputStream): List<String>
+        + {static} write(lines: List<String>, filename: String): void

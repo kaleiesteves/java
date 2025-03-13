@@ -17,7 +17,7 @@ public class XSort {
         
         System.out.println("Test for XSort...");
 
-        if (args.length <1) {
+        if (args.length < 1) {
             System.out.println("Usage: cat MobyDick.txt | java XSort 512 > Result.txt");
             System.exit(1);
         } else {
